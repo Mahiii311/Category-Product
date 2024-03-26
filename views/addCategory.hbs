@@ -1,0 +1,41 @@
+<div class="container">
+    <form id="form">
+        <div class="mb-3">
+            <label for="category" class="form-label">Category Name:</label>
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
+        <div class="btn">
+            <button type="button" class="btn btn-primary" id="add">Add Category</button>
+        </div>
+    </form>
+</div>
+{{!-- #form.serialize(); --}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("form").serialize();
+        $("#add").on("click", function () {
+            $.ajax({
+                url: "/categories/",
+                type: "POST",
+                async: false,
+                data: {
+                    "name": $("#name").val()
+                },
+                success: function (response) {
+                    if (response.type == 'success') {
+                        console.log(response)
+                        alert(response.data);
+                        location.href = '/categories/list'
+                    } else {
+                        console.log(response);
+                        alert(response.data)
+                    }
+                },
+                error: function () {
+                    console.log("error");
+                }
+            })
+        });
+    });
+</script>

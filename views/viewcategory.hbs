@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="justify-content-around">
+       <h3>Id: {{user._id}}</h3>
+       <h3>name: {{user.name}}</h3>
+       <h3>initials: {{user.initials}}</h3>
+       <h3>createdAt: {{user.createdAt}}</h3>
+       <h3>UpdatedAt: {{user.updatedAt}}</h3>
+       <h3>product:{{#each user.productId}}
+        <p>-------------------------------------</p>
+            <h4>name: {{name}}</h4>
+            <h4>price: {{price}} Rs.</h4>
+            <h4>discount: {{discount}}%</h4>
+            <h4>discountedPrice: {{discountedPrice}} RS.</h4>
+            <h4>productId: {{productId}}</h4>
+            <h4>createdAt: {{createdAt}}</h4>
+            <h4>updatedAt: {{updatedAt}}</h4>
+            {{/each}}
+       </h3>
+       
+    </div>
+</div>

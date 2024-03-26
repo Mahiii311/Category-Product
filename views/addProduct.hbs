@@ -1,0 +1,61 @@
+<div class="container">
+    <form id="form">
+        <div class="mb-3">
+            <label for="product" class="form-label">Product Name:</label>
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
+        <div class="mb-3">
+            <label for="product" class="form-label">Category:</label>
+            <select name="_category" class="form-control" id="_category">
+                <option disabled selected>...</option>
+                {{#each category}}
+                <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="product" class="form-label">Price:</label>
+            <input type="text" class="form-control" id="price" name="price">
+        </div>
+        <div class="mb-3">
+            <label for="product" class="form-label">Discount:</label>
+            <input type="text" class="form-control" id="discount" name="discount">
+        </div>
+        <div class="btn">
+            <button type="button" class="btn btn-primary" id="add">Add Product</button>
+        </div>
+    </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("form").serialize();
+        console.log($("form").serialize());
+        $("#add").on("click", function () {
+            $.ajax({
+                url: "/products/",
+                type: "POST",
+                async: false,
+                data: {
+                    "name": $("#name").val(),
+                    "_category": $("#_category").val(),
+                    "price": $("#price").val(),
+                    "discount": $("#discount").val()
+                },
+                success: function (response) {
+                    if (response.type == 'success') {
+                        console.log(response)
+                        alert(response.data);
+                        location.href = '/products/list'
+                    } else {
+                        console.log(response);
+                        alert(response.data ? response.data : response._message)
+                    }
+                },
+                error: function () {
+                    console.log("error");
+                }
+            })
+        });
+    });
+</script>

@@ -1,0 +1,64 @@
+<div class="container">
+    <table class="table table-bordered text-center">
+        <th>Category name</th>
+        <th>Initials</th>
+        <th>Total products</th>
+        <th>Added On</th>
+        <th colspan="3">Action</th>
+        {{#each users}}
+        <tr>
+            <td>{{name}}</td>
+            <td>{{initials}}</td>
+            <td>{{totalNumberOfProducts}}</td>
+            <td>{{createdAt}}</td>
+            <td><a href="/categories/view/{{_id}}" class="view">View</a></td>
+            <td><a href="/categories/edit/{{_id}}" class="edit">Edit</a></td>
+            <td><a href="javascript:void(0)" data-id="{{_id}}" class="dlt">Delete</a></td>
+        </tr>
+        {{/each}}
+    </table>
+    <!-- Modal -->
+    {{!-- data-toggle="modal" data-target="#viewdata" --}}
+    {{!-- <div class="modal fade" id="viewdata" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+            </div>
+        </div>
+    </div> --}}
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".dlt").on('click', function () {
+            $(this).data('id')
+            console.log($(this).data('id'))
+            $.ajax({
+                url: `/categories/${$(this).data('id')}`,
+                type: 'delete',
+                async: false,
+                success: function (response) {
+                    if (response.type == 'success') {
+                        console.log(response)
+                        location.href = '/categories/list'
+                    } else {
+                        console.log(response);
+                        alert(response.data ? response.data : response._message)
+                    }
+                },
+                error: function () {
+                    console.log("error");
+                }
+            });
+        });
+    });
+</script>
